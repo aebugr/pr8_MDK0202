@@ -28,16 +28,40 @@ namespace Weather_Bugrina
         public MainWindow()
         {
             InitializeComponent();
+            string currentCity = "Пермь";
+            UpdateWeather(currentCity);
+        }
+        private async Task UpdateWeather(string city)
+        {
+            var weatherData = await FetchWeatherData(city);
+            WeatherDataGrid.ItemsSource = weatherData;
+            LocationLabel.Content = $"Текущее место: {city}";
         }
 
-        private void UpdateWeather_Click(object sender, RoutedEventArgs e)
+        private async void UpdateWeather_Click(object sender, RoutedEventArgs e)
         {
+            string city = CityTextBox.Text.Trim();
 
+            if (string.IsNullOrEmpty(city))
+            {
+                city = "Пермь";
+            }
+
+            await UpdateWeather(city);
         }
 
-        private void UpdateKey(object sender, KeyEventArgs e)
+        private async void UpdateKey(object sender, KeyEventArgs e)
         {
-
+            string city = CityTextBox.Text.Trim();
+            if (e.Key == Key.Enter)
+            {
+                if (string.IsNullOrEmpty(city))
+                {
+                    MessageBox.Show("Неккоректный ввод города");
+                    return;
+                }
+                await UpdateWeather(city);
+            }
         }
         private async Task<List<WeatherData>> FetchWeatherData(string city)
         {
