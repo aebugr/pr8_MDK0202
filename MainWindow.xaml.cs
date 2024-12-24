@@ -24,5 +24,15 @@ namespace Weather_Bugrina
         {
             InitializeComponent();
         }
+
+        private void UpdateWeather_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UpdateKey(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
